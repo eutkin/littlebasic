@@ -2,27 +2,28 @@ grammar SimpleExpression;
 import SimpleTokens;
 
 line
-    : exp EOF
-    ;
-
-exp
-    : expression
+    : expression EOF
     ;
 
 expression
-    : string                                    # StringExpr
-    | number                                    # NumberExpr
-    | id                                        # IdExpr
-    | (LPAREN expression RPAREN)                # ParenExpr
-    | expression DIV expression    # DivExpr
-    | expression MUL expression                 # MulExpr
-    | expression op=(ADD|SUB) expression        # AddSubExpr
-    | expression op=(GTE|GT|LTE|LT|EQ|NEQ) expression   # RelExpr
-    | NOT expression                            # NotExpr
-    | expression AND expression                 # AndExpr
-    | expression OR expression                  # OrExpr
+    : boolean_expression
     ;
 
+boolean_expression
+    : string_expression EQ string_expression #StringEqExp
+    | number_expression EQ number_expression #NumberEqExp
+    ;
+
+string_expression
+    : string_expression ADD string_expression #StringPlusExp
+    | string #StringExp
+    ;
+
+number_expression
+    : number_expression MUL number_expression   #NumberMulExp
+    | number_expression ADD number_expression  #NumberPluxExp
+    | number #NumberExp
+    ;
 
 string
     : STRINGLITERAL
@@ -32,8 +33,5 @@ number
     : NUMBER
     ;
 
-id
-    : ID
-    ;
 
 
