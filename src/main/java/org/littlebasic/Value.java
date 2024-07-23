@@ -1,5 +1,6 @@
 package org.littlebasic;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
@@ -178,5 +179,8 @@ public class Value {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return Objects.toString(this.value);
+    }
 }
