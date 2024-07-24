@@ -114,14 +114,14 @@ public class SimpleVisitor extends SimpleExpressionBaseVisitor<BaseValue> {
     }
 
     @Override
-    public BaseValue visitNumberMulExp(SimpleExpressionParser.NumberMulExpContext ctx) {
+    public NumberValue visitNumberMulExp(SimpleExpressionParser.NumberMulExpContext ctx) {
         NumberValue left = (NumberValue) visitLeftOperand(ctx);
         NumberValue right = (NumberValue) visitRightOperand(ctx);
         return left.mul(right);
     }
 
     @Override
-    public BaseValue visitNumberPluxExp(SimpleExpressionParser.NumberPluxExpContext ctx) {
+    public NumberValue visitNumberPluxExp(SimpleExpressionParser.NumberPluxExpContext ctx) {
         NumberValue left = (NumberValue) visitLeftOperand(ctx);
         NumberValue right = (NumberValue) visitRightOperand(ctx);
         return left.add(right);
