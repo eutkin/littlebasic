@@ -23,6 +23,11 @@ public class NumberValue implements BaseValue {
         return new BooleanValue(result);
     }
 
+    public BooleanValue in(NumberArrayValue right) {
+        boolean result = right.contains(this);
+        return new BooleanValue(result);
+    }
+
     @Override
     public String toString() {
         return Objects.toString(value);

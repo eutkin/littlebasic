@@ -26,4 +26,11 @@ public class InterpreterTest {
         assertEquals(true, value.getValue());
     }
 
+    @Test
+    public void testTrueNumberInArrayExp() throws IOException {
+        Interpreter interpreter = new Interpreter();
+        BooleanValue value = interpreter.run("2 in [1 + 3, 5, 1 + 1]");
+        assertEquals(true, value.getValue());
+    }
+
 }

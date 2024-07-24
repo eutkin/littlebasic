@@ -12,6 +12,7 @@ expression
 boolean_expression
     : string_expression EQ string_expression #StringEqExp
     | number_expression EQ number_expression #NumberEqExp
+    | number_expression IN number_array_expression #NumberInArrayExp
     ;
 
 string_expression
@@ -23,6 +24,10 @@ number_expression
     : number_expression MUL number_expression   #NumberMulExp
     | number_expression ADD number_expression  #NumberPluxExp
     | number #NumberExp
+    ;
+
+number_array_expression
+    : START_ARRAY number_expression (COMMA number_expression)* END_ARRAY
     ;
 
 string

@@ -25,6 +25,11 @@ COMMA  : ',' ;
 LPAREN : '(' ;
 RPAREN : ')' ;
 
+START_ARRAY : '[' ;
+
+END_ARRAY : ']' ;
+
+IN : 'in' ;
 
 
 // literals

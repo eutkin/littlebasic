@@ -4,10 +4,13 @@ import basic.SimpleExpressionBaseVisitor;
 import basic.SimpleExpressionParser;
 import com.github.eutkin.value.BaseValue;
 import com.github.eutkin.value.BooleanValue;
+import com.github.eutkin.value.NumberArrayValue;
 import com.github.eutkin.value.NumberValue;
 import com.github.eutkin.value.StringValue;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.littlebasic.Memory;
+
+import java.util.stream.Collectors;
 
 /**
  * The ANTLR visitor. This does the actual job of executing the program.
@@ -16,7 +19,7 @@ public class SimpleVisitor extends SimpleExpressionBaseVisitor<BaseValue> {
 
     private Memory memory;
 
-    protected BooleanValue value;
+    private BooleanValue value;
 
 
     public SimpleVisitor(Memory memory) {
@@ -74,6 +77,21 @@ public class SimpleVisitor extends SimpleExpressionBaseVisitor<BaseValue> {
         return left.eq(right);
     }
 
+    @Override
+    public BooleanValue visitNumberInArrayExp(SimpleExpressionParser.NumberInArrayExpContext ctx) {
+        NumberValue left = (NumberValue) this.visitLeftOperand(ctx);
+        NumberArrayValue right = (NumberArrayValue) this.visitRightOperand(ctx);
+        return left.in(right);
+    }
+
+    @Override
+    public NumberArrayValue visitNumber_array_expression(SimpleExpressionParser.Number_array_expressionContext ctx) {
+        return ctx.number_expression()
+                .stream()
+                .map(this::visit)
+                .map(i -> (NumberValue) i)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), NumberArrayValue::new));
+    }
 
     @Override
     public StringValue visitString(SimpleExpressionParser.StringContext ctx) {

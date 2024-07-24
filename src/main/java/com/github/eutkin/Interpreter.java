@@ -32,8 +32,7 @@ public class Interpreter {
             ParseTree tree = parser.line();
             memory = new Memory();
             SimpleVisitor eval = new SimpleVisitor(memory);
-            eval.run(tree);
-            return eval.value;
+            return eval.run(tree);
         } catch (InterpreterException | ParseCancellationException e) {
            e.printStackTrace();
         }
